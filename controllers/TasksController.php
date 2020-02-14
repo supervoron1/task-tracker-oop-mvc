@@ -4,8 +4,10 @@
 namespace app\controllers;
 
 use app\engine\Request;
-use app\models\Authors;
-use app\models\Tasks;
+use app\models\entities\Authors;
+use app\models\entities\Tasks;
+use app\models\repositories\AuthorsRepository;
+use app\models\repositories\TasksRepository;
 
 class TasksController extends Controller
 {
@@ -30,12 +32,13 @@ class TasksController extends Controller
 		}
 
 		$from = ($page - 1) * $itemsPerPage;
-		$tasks = Tasks::getAllTasks($from, $itemsPerPage);
-		$count = (int)Tasks::getCount()['count'];
+
+		$tasks = (new TasksRepository())->getAllTasks($from, $itemsPerPage);
+		$count = (int)(new TasksRepository())->getCount()['count'];
 		$perPageChoice = [2, 3, 5];
 		$pagesCount = ceil($count / $itemsPerPage);
-		$authors = static::unique_multidim_array($tasks, 'author_name');
-		$status = static::unique_multidim_array($tasks, 'status_name');
+		$authors = $this->unique_multidim_array($tasks, 'author_name');
+		$status = $this->unique_multidim_array($tasks, 'status_name');
 		echo $this->render('tasks', [
 			'tasks' => $tasks,
 			'status' => $status,
@@ -50,8 +53,8 @@ class TasksController extends Controller
 
 	public function actionTask()
 	{
-		$status = Tasks::getTable('status');
-		$authors = Authors::getAll();
+		$status = (new TasksRepository())->getTable('status');
+		$authors = (new AuthorsRepository())->getAll();
 		echo $this->render('task', [
 			'status' => $status,
 			'authors' => $authors
@@ -75,18 +78,19 @@ class TasksController extends Controller
 		$status = trim(htmlspecialchars(strip_tags(stripslashes($status))));
 
 		$author = $this->mb_ucfirst($author);
-		$authors = Authors::getAll();
+		$authors = (new AuthorsRepository())->getAll();
 		$key = array_search($author, array_column($authors, 'title'));
 		if ($key) {
 			$author = $authors[$key]['id'];
 		} else {
-			$author = (new Authors($author))->save();
-			$authors = Authors::getAll();
+			$author = new Authors($author);
+			(new AuthorsRepository())->save($author);
+			$authors = (new AuthorsRepository())->getAll();
 			$author = $authors[array_key_last($authors)]['id'];
 		}
 
 		$task = new Tasks($title, $author, $status);
-		$task->save();
+		(new TasksRepository())->save($task);
 
 		header('Content-Type: application/json');
 		echo json_encode(['message' => 'Новая задача успешно добавлена.']);
@@ -96,8 +100,8 @@ class TasksController extends Controller
 	public function actionDeleteTask()
 	{
 		$id = (new Request())->getParams()['id'];
-		$task = Tasks::getOne($id);
-		$task->delete();
+		$task = (new TasksRepository())->getOne($id);
+		(new TasksRepository())->save($task);
 
 		header('Content-Type: application/json');
 		echo json_encode(['status' => 'Задание удалено']);

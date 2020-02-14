@@ -1,10 +1,12 @@
 <?php
 
 
-namespace app\models;
+namespace app\models\entities;
 
 
-class Authors extends DbModel
+use app\models\Model;
+
+class Authors extends Model
 {
 	protected $id = null;
 	protected $title;
@@ -17,10 +19,5 @@ class Authors extends DbModel
 	public function __construct($title)
 	{
 		$this->title = $title;
-	}
-
-	public static function getTableName()
-	{
-		return "authors";
 	}
 }

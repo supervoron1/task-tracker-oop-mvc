@@ -5,6 +5,7 @@ namespace app\controllers;
 
 use app\engine\Render;
 use app\interfaces\IRenderer;
+use app\models\repositories\TasksRepository;
 
 abstract class Controller
 {

@@ -3,14 +3,11 @@
 
 namespace app\models;
 
-
-use app\interfaces\IModel;
-
-abstract class Model implements IModel
+abstract class Model
 {
     public function __set($name, $value)
     {
-        $this->name = $value;
+        $this->$name = $value;
         $this->props[$name] = true;
     }
 
