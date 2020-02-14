@@ -9,32 +9,7 @@ use app\interfaces\IModel;
 
 abstract class Repository implements IModel
 {
-	public function getCount(){
-		$tableName = $this->getTableName();
-		$sql = "SELECT count(*) AS count FROM {$tableName}";
-		return Db::getInstance()->queryOne($sql);
-	}
-
-	public function getOne($id)
-	{
-		$tableName = $this->getTableName();
-		$sql = "SELECT * FROM {$tableName} WHERE id = :id";
-		return Db::getInstance()->queryObject($sql, ['id' => $id], $this->getEntityClass());
-	}
-
-	public function getAll()
-	{
-		$tableName = $this->getTableName();
-		$sql = "SELECT * FROM `{$tableName}`";
-		return Db::getInstance()->queryAll($sql);
-	}
-
-	public function getTable($table)
-	{
-		$sql = "SELECT * FROM {$table}";
-		return Db::getInstance()->queryAll($sql);
-	}
-
+	// CRUD блок для работы с сущностями
 	public function insert(Model $entity)
 	{
 		$params = [];
@@ -84,6 +59,32 @@ abstract class Repository implements IModel
 		$tableName = $this->getTableName();
 		$sql = "DELETE FROM `{$tableName}` WHERE `id` = :id";
 		return Db::getInstance()->execute($sql, ['id' => $entity->id]);
+	}
+
+	public function getCount(){
+		$tableName = $this->getTableName();
+		$sql = "SELECT count(*) AS count FROM {$tableName}";
+		return Db::getInstance()->queryOne($sql);
+	}
+
+	public function getOne($id)
+	{
+		$tableName = $this->getTableName();
+		$sql = "SELECT * FROM {$tableName} WHERE id = :id";
+		return Db::getInstance()->queryObject($sql, ['id' => $id], $this->getEntityClass());
+	}
+
+	public function getAll()
+	{
+		$tableName = $this->getTableName();
+		$sql = "SELECT * FROM `{$tableName}`";
+		return Db::getInstance()->queryAll($sql);
+	}
+
+	public function getTable($table)
+	{
+		$sql = "SELECT * FROM {$table}";
+		return Db::getInstance()->queryAll($sql);
 	}
 
 	abstract public function getTableName();

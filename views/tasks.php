@@ -3,6 +3,7 @@
     <a href="/tasks/task/" class="add">Новая задача</a>
 </div>
 
+<!--Блок селекторов-->
 <div class="selectors">
     <select name="authors" id="author-selector" class="author-selector">
         <option value="default" selected>Все авторы (<?= count($authors) ?>)</option>
@@ -27,6 +28,7 @@
     </div>
 </div>
 
+<!--Блок с задачами-->
 <div class="tasks-container">
     <div class="task-div">
         <div id='flex-container'>
@@ -52,6 +54,7 @@
 	<? endforeach; ?>
 </div>
 
+<!--Блок пагинации-->
 <div class="pagination">
 	<? if ($page != 1): ?>
       <a href="/tasks/list/?page=<?= $page - 1 ?>&show=<?= $itemsPerPage ?>" class="pag-icon">Previous</a>
@@ -70,6 +73,7 @@
 	<? endif; ?>
 </div>
 
+<!--Скрипт удаления задачи-->
 <script>
   let buttons = document.querySelectorAll('.delete');
   buttons.forEach((elem) => {
@@ -98,6 +102,7 @@
   });
 </script>
 
+<!--Обработка фильтров-->
 <script>
   let selector = document.getElementById('author-selector');
   selector.addEventListener('change', (e) => {

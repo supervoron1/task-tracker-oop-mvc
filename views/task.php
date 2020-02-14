@@ -2,6 +2,7 @@
     <h1>Добавление новой задачи</h1>
 </div>
 
+<!--Блок формы новой задачи-->
 <form action="/tasks/list/" id="addTaskBtn" class="addForm">
     <input type="text" id="title" placeholder="Название задачи" required>
     <input type="text" id="author" placeholder="Имя автора" required>
@@ -14,6 +15,7 @@
 </form>
 <button form="addTaskBtn" class="add">Добавить задачу</button>
 
+<!--Скрипт добавления новой задачи-->
 <script>
   document.querySelector('.add').addEventListener('click', () => {
     let title = document.getElementById('title').value;

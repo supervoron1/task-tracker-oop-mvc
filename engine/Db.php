@@ -77,14 +77,6 @@ class Db
 		return $pdoStatement->fetchAll();
 	}
 
-	public function executeLimitPage($sql, $page)
-	{
-		$pdoStatement = $this->getConnection()->prepare($sql);
-		$pdoStatement->bindValue(1, $page, \PDO::PARAM_INT);
-		$pdoStatement->execute();
-		return $pdoStatement->fetchAll();
-	}
-
 	public function queryOne($sql, $params = [])
 	{
 		return $this->queryAll($sql, $params)[0];

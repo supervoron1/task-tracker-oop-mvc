@@ -14,6 +14,8 @@ class TasksRepository extends Repository
 		return Tasks::class;
 	}
 
+	// Получаем данные через JOIN из трех таблиц tasks, authors, status с указанным LIMIT
+	// Результирующая таблица - наименование задания, имя автора, статус (все словами) в указанном диапозоне
 	public function getAllTasks($from, $num)
 	{
 		$sql = "SELECT tasks.id, tasks.title, 

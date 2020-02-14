@@ -17,6 +17,7 @@ class Request
         $this->parseRequest();
     }
 
+    // Парсим запрос
     private function parseRequest() {
         $this->method = $_SERVER['REQUEST_METHOD'];
         $url = explode('/', $this->requestString);
@@ -29,9 +30,8 @@ class Request
                 $this->params[$key] = $elem;
             }
         }
-
     }
-
+    // Геттеры
     /**
      * @return mixed
      */
@@ -39,7 +39,6 @@ class Request
     {
         return $this->controllerName;
     }
-
     /**
      * @return mixed
      */

@@ -48,6 +48,7 @@ abstract class Controller
 		return $this->renderer->renderTemplate($template, $params);
 	}
 
+	// Функция преобразования первой буквы в заглавную, работает в кириллице (UTF-8)
 	public function mb_ucfirst($str, $encoding = 'UTF-8')
 	{
 		$str = mb_ereg_replace('^[\ ]+', '', $str);
@@ -56,6 +57,7 @@ abstract class Controller
 		return $str;
 	}
 
+	// Функция перебирает многомерный ассоциативный массив и возвращает новый массив без повторяющихся по $key значений
 	public function unique_multidim_array($array, $key) {
 		$temp_array = array();
 		$i = 0;
