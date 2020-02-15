@@ -32,13 +32,14 @@ class TasksController extends Controller
 		} else {
 			$itemsPerPage = 5;
 		}
+		// определение необходимых параметров для отображения кол-ва записей на странице
+		$perPageChoice = [2, 3, 5];
 		// получение первого элемента для LIMIT в SQL запросе
 		$from = ($page - 1) * $itemsPerPage;
 		// получение списка задач на страницу из диапозона LIMIT
 		$tasks = (new TasksRepository())->getAllTasks($from, $itemsPerPage);
 		// получение общего количества задач из БД
 		$count = (int)(new TasksRepository())->getCount()['count'];
-		$perPageChoice = [2, 3, 5];
 		// получение кол-ва страниц для блока пагинации
 		$pagesCount = ceil($count / $itemsPerPage);
 		// получение списка авторов только тех заданий, что отображенны на странице
@@ -61,18 +62,23 @@ class TasksController extends Controller
 	// Функция рендера страницы с добавлением задачи
 	public function actionTask()
 	{
+		// Получение задачи для редактирования
+		$id = (int)(new Request())->getParams()['id'];
+		$task = (new TasksRepository())->getTask($id);
 		// получение списка статусов
 		$status = (new TasksRepository())->getTable('status');
 		// рендер страницы и передача параметров для работы на странице
 		echo $this->render('task', [
 			'status' => $status,
+			'task' => $task,
 		]);
 	}
 
-	// Функция добавления нового задания
+	// Функция добавления нового задания или редактирования существующего
 	public function actionAddTask()
 	{
-		// Получение данных пришедших из формы со страницы добавления нового задания
+		// Получение данных пришедших из формы со страницы добавления/рекактирования задания
+		$id = (new Request())->getParams()['id'];
 		$title = (new Request())->getParams()['title'];
 		$status = (new Request())->getParams()['status'];
 		$author = (new Request())->getParams()['author'];
@@ -107,7 +113,7 @@ class TasksController extends Controller
 		}
 
 		// Сохранение новой задачи в БД
-		$task = new Tasks($title, $author, $status);
+		$task = new Tasks($id, $title, $author, $status);
 		(new TasksRepository())->save($task);
 
 		header('Content-Type: application/json');

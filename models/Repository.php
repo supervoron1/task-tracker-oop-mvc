@@ -33,16 +33,16 @@ abstract class Repository implements IModel
 		$params = [];
 		$colums = [];
 		foreach ($entity->props as $key => $value) {
-			if (!$value) continue;
+			if ($value) continue;
 			$params[":{$key}"] = $entity->$key;
 			$colums[] .= "`" . $key . "` = :" . $key;
 			$entity->props[$key] = false;
 		}
+
 		$colums = implode(", ", $colums);
 		$params[':id'] = $entity->id;
 		$tableName = $this->getTableName();
 		$sql = "UPDATE `{$tableName}` SET {$colums} WHERE `id` = :id";
-
 		Db::getInstance()->execute($sql, $params);
 	}
 
