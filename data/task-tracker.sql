@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Фев 14 2020 г., 12:53
+-- Время создания: Фев 15 2020 г., 23:21
 -- Версия сервера: 8.0.15
 -- Версия PHP: 7.3.9
 
@@ -46,7 +46,10 @@ INSERT INTO `authors` (`id`, `title`) VALUES
 (6, 'Денис'),
 (7, 'Миша'),
 (8, 'Семен'),
-(9, 'Игорь');
+(9, 'Игорь'),
+(10, 'Армен'),
+(14, 'Ми'),
+(15, 'Саша');
 
 -- --------------------------------------------------------
 
@@ -91,13 +94,13 @@ INSERT INTO `tasks` (`id`, `title`, `author_id`, `status_id`) VALUES
 (3, 'Сварить себе пельмени', 2, 2),
 (4, 'Съездить в отпуск', 3, 2),
 (23, 'Купить корм слону', 1, 4),
-(25, 'Помыть посуду', 5, 2),
-(26, 'Погулять с собакой', 8, 1),
-(27, 'Пожарить шашлык', 5, 2),
+(25, 'Купить уголь', 5, 3),
+(26, 'Купить коньяк', 8, 3),
+(27, 'Пожарить шашлык', 10, 3),
 (29, 'Принести дрова', 6, 4),
-(30, 'Купить продукты', 3, 2),
-(31, 'Познать самого себя', 7, 1),
-(32, 'Научиться играть на гитаре', 2, 2);
+(30, 'Купить продукты', 3, 1),
+(43, 'Позвать друзей', 7, 4),
+(44, 'Познать самого себя', 3, 1);
 
 --
 -- Индексы сохранённых таблиц
@@ -129,7 +132,7 @@ ALTER TABLE `tasks`
 -- AUTO_INCREMENT для таблицы `authors`
 --
 ALTER TABLE `authors`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT для таблицы `status`
@@ -141,7 +144,7 @@ ALTER TABLE `status`
 -- AUTO_INCREMENT для таблицы `tasks`
 --
 ALTER TABLE `tasks`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
