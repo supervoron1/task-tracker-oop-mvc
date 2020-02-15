@@ -32,10 +32,11 @@
 <div class="tasks-container">
     <div class="task-div">
         <div id='flex-container'>
-            <div class="task-header"></div>
             <div class="task-header">Название задачи</div>
             <div class="task-header">Автор</div>
             <div class="task-header">Статус</div>
+            <div class="task-header"></div>
+            <div class="task-header"></div>
         </div>
     </div>
 
@@ -43,12 +44,15 @@
       <div id="<?= $task['id'] ?>" class="task task-div" data-author="<?= $task['author_name'] ?>"
            data-status="<?= $task['status_name'] ?>">
           <div id='flex-container'>
-              <div  class="task-specs">
-                  <button data-id="<?= $task['id'] ?>" class="delete">X</button>
-              </div>
               <div class="task-specs"><p><?= $task['title'] ?></p></div>
               <div class="task-specs"><p><?= $task['author_name'] ?></p></div>
               <div class="task-specs"><p><?= $task['status_name'] ?></p></div>
+              <div class="task-specs btn">
+                  <a href="/tasks/task/?id=<?= $task['id'] ?>" class="edit fas fas fa-pencil-alt"></a>
+              </div>
+              <div class="task-specs btn">
+                  <button data-id="<?= $task['id'] ?>" class="delete fas fas fa-times"></button>
+              </div>
           </div>
       </div>
 	<? endforeach; ?>

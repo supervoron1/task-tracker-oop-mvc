@@ -27,6 +27,18 @@ class TasksRepository extends Repository
 		return Db::getInstance()->executeLimit($sql, $from, $num);
 	}
 
+	public function getTask($id)
+	{
+		$sql = "SELECT tasks.id, tasks.title, 
+       			authors.id AS author_id, authors.title AS author_name, 
+       			status.id AS status_id, status.title AS status_name 
+						FROM tasks 
+						JOIN authors ON tasks.author_id = authors.id 
+						JOIN status ON tasks.status_id = status.id
+						WHERE tasks.id = :id";
+		return Db::getInstance()->queryObject($sql, ['id' => $id], $this->getEntityClass());
+	}
+
 	public function getTableName()
 	{
 		return "tasks";
