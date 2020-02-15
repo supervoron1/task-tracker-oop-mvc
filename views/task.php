@@ -3,11 +3,11 @@
     <h1>Добавление новой задачи</h1>
    <? else :?>
     <h1>Редактирование задачи</h1>
-  <?endif;?>
+  <?endif; ?>
 </div>
 
 <!--Блок формы новой задачи-->
-<form action="/tasks/list/" id="addTaskBtn" class="addForm">
+<form action="/tasks/addTask/" id="addTaskBtn" class="addForm">
     <input type="text" id="title" value="<?=$task->title?>" placeholder="Название задачи" required>
     <input type="text" id="author" value="<?=$task->author_name?>" placeholder="Имя автора" required>
     <select name="status" id="status" required>
@@ -24,12 +24,16 @@
         <? endforeach; ?>
     </select>
 </form>
-<button form="addTaskBtn" id="" class="add">Добавить задачу</button>
+<button form="addTaskBtn" class="add">Добавить задачу</button>
 
 <!--Скрипт добавления новой задачи-->
 <script>
   document.querySelector('.add').addEventListener('click', () => {
-    let id = <?=$task->id?>;
+    <?if ($task->id) :?>
+        let id = <?=$task->id?>;
+    <? else :?>
+        id = null;
+    <?endif; ?>
     let title = document.getElementById('title').value;
     let author = document.getElementById('author').value;
     let status = document.getElementById('status').value;
