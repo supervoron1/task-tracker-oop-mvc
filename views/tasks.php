@@ -1,5 +1,5 @@
 <div class="header">
-    <h1>Задачник</h1>
+    <h1>Task Tracker</h1>
     <a href="/tasks/task/" class="add">Новая задача</a>
 </div>
 

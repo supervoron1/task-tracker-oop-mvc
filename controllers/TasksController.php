@@ -59,7 +59,7 @@ class TasksController extends Controller
 		]);
 	}
 
-	// Функция рендера страницы с добавлением задачи
+	// Функция рендера страницы добавления/изменения задачи
 	public function actionTask()
 	{
 		// Получение задачи для редактирования
@@ -77,7 +77,7 @@ class TasksController extends Controller
 	// Функция добавления нового задания или редактирования существующего
 	public function actionAddTask()
 	{
-		// Получение данных пришедших из формы со страницы добавления/рекактирования задания
+		// Получение данных пришедших из формы со страницы добавления/редактирования задания
 		$id = (new Request())->getParams()['id'];
 		$title = (new Request())->getParams()['title'];
 		$status = (new Request())->getParams()['status'];
@@ -97,13 +97,14 @@ class TasksController extends Controller
 
 		// Преобразования первой буквы имени автора в заглавную, в том числе кириллица
 		$author = $this->mb_ucfirst($author);
+
 		// Получение всех авторов из БД
 		$authors = (new AuthorsRepository())->getAll();
 		// Проверка существует ли полученный из формы автор в БД
 		// Если да, то $author присваивается индекс автора из БД
 		// Если нет, то создается новая запись в БД и $author присваивается новых индекс
 		$key = array_search($author, array_column($authors, 'title'));
-		if ($key) {
+		if (isset($key)) {
 			$author = $authors[$key]['id'];
 		} else {
 			$author = new Authors($author);
@@ -112,7 +113,7 @@ class TasksController extends Controller
 			$author = $authors[array_key_last($authors)]['id'];
 		}
 
-		// Сохранение новой задачи в БД
+		// Сохранение новой/измененной задачи в БД
 		$task = new Tasks($id, $title, $author, $status);
 		(new TasksRepository())->save($task);
 

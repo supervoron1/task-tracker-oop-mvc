@@ -6,7 +6,7 @@
   <?endif; ?>
 </div>
 
-<!--Блок формы новой задачи-->
+<!--Блок формы задачи-->
 <form action="/tasks/addTask/" id="addTaskBtn" class="addForm">
     <input type="text" id="title" value="<?=$task->title?>" placeholder="Название задачи" required>
     <input type="text" id="author" value="<?=$task->author_name?>" placeholder="Имя автора" required>
@@ -26,7 +26,7 @@
 </form>
 <button form="addTaskBtn" class="add">Добавить задачу</button>
 
-<!--Скрипт добавления новой задачи-->
+<!--Скрипт добавления/редактирования задачи-->
 <script>
   document.querySelector('.add').addEventListener('click', () => {
     <?if ($task->id) :?>
